@@ -1,0 +1,34 @@
+<div class="panel-body">
+  <div class="table-responsive table-bordered">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone No</th>
+          <th>Date of Birth</th>
+          <th>Role Name</th>
+          <th>Department Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{user.Uname}}</td>
+          <td>{{user.Fname}}</td>
+          <td>{{user.Lname}}</td>
+          <td>{{user.Email}}</td>
+          <td>{{user.Phone}}</td>
+          <td>{{user.birth | date}}</td>
+          <td>{{user.role.RoleName}}</td>
+          <td>{{user.department.DeptName}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.table-responsive -->
+</div>

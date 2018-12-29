@@ -1,0 +1,107 @@
+<div id="createUser" class="modal fade in display" (click)="unLoadModel()" role="dialog">
+  <div class="modal-dialog">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!-- Modal content-->
+      <div class="modal-content" style="z-index: 99" appPrevent>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="unLoadModel()">&times;</button>
+          <h4 class="modal-title">Create User</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>First Name</label>
+                <input class="form-control" name="FName" ngModel required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Last Name</label>
+                <input class="form-control" name="LName" ngModel required>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>User Name</label>
+                <input class="form-control" name="UName" ngModel required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" name="Email" ngModel required>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Phone No</label>
+                <input type="phone" class="form-control" name="Phone" ngModel required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" class="form-control" name="Date" ngModel required>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Role Name</label>
+                <select class="form-control" name="Role" ngModel required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let role of roles;let i=index" value="{{i}}">{{role.RoleName}}</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Department Name</label>
+                <select class="form-control" name="Department" ngModel required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let department of departments;let i=index" value="{{i}}">{{department.DeptName}}</option>
+                </select>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" name="Password" ngModel required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Confirm Password</label>
+                <input class="form-control" type="password" name="CPassword" ngModel required>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="unLoadModel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

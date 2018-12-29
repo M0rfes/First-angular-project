@@ -1,0 +1,26 @@
+<div class="text-right">
+  <button class="btn btn-success m-y-20" data-toggle="modal" data-target="#createUser" (click)="loadModel()">Create
+    User</button>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Users
+      </div>
+      <!-- /.panel-heading -->
+      <app-paneldefault>
+        <app-user-table></app-user-table>
+      </app-paneldefault>
+      <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+    <!-- Modal -->
+
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+</div>
+<!-- /.row -->

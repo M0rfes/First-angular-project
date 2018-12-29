@@ -1,0 +1,24 @@
+<div class="text-right" >
+  <button class="btn btn-success m-y-20" data-toggle="modal"
+  (click)="loadModel()"
+  data-target="#faculty">Add Faculty</button>
+  </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               Faculty
+            </div>
+            <!-- /.panel-heading -->
+            <app-paneldefault>
+                <app-faculty-table></app-faculty-table>
+              </app-paneldefault>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+        <!-- Modal -->
+        <router-outlet></router-outlet>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

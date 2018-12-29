@@ -1,0 +1,22 @@
+<div class="panel-body">
+  <div class="table-responsive table-bordered">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Department Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let department of departments; let i = index" (click)="onEdit(i)">
+          <td>{{i+1}}</td>
+          <td>{{department.DeptName}}</td>
+          <td><a>Edit</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.table-responsive -->
+</div>

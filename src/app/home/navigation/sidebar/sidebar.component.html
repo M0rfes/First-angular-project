@@ -1,0 +1,48 @@
+<div class="navbar-default sidebar" role="navigation">
+  <div class="sidebar-nav navbar-collapse collapse" [ngClass]="{in : toggleState}">
+    <ul class="nav" id="side-menu">
+      <li class="sidebar-search">
+        <div class="input-group custom-search-form">
+          <input type="text" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+        <!-- /input-group -->
+      </li>
+      <li>
+        <a routerLink="/home"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+      </li>
+      <li [ngClass]="{active: !dropDownActive}" (click)="toggle()">
+        <a><i class="fa fa-user fa-fw"></i> Manage Users<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse" [ngClass]="{in: dropDownActive}" (click)="active()">
+          <li>
+            <a routerLink="ManageUsers">User</a>
+          </li>
+          <li>
+            <a routerLink="ManageRoles">Role</a>
+          </li>
+        </ul>
+        <!-- /.nav-second-level -->
+      </li>
+      <li>
+        <a routerLink="ManageDepartment"><i class="fa fa-bank  fa-fw"></i> Manage Department</a>
+      </li>
+      <li>
+        <a routerLink="ManageFaculty"><i class="fa fa-group fa-fw"></i> Manage Faculty</a>
+      </li>
+
+      <li>
+        <a routerLink="ManageRemuneration"><i class="fa  fa-money fa-fw"></i> Manage Remuneration</a>
+      </li>
+      <li>
+        <a (click)="onLogout()"><i class="fa  fa-power-off  fa-fw"></i> Logout</a>
+      </li>
+
+
+    </ul>
+  </div>
+  <!-- /.sidebar-collapse -->
+</div>

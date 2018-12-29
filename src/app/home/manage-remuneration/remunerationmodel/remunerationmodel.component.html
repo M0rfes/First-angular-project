@@ -1,0 +1,49 @@
+<div id="addremuneration" class="modal fade in display" (click)="unLoadModel()" role="dialog">
+  <div class="modal-dialog" appPrevent>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="unLoadModel()" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Remuneration</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label>Type Name</label>
+                <input class="form-control" name="Name" [(ngModel)]="editRum" required>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Amount</label>
+                <input type="number" class="form-control" name="Amount" [(ngModel)]="editAmount" required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Year</label>
+                <select class="form-control" name="Year" [(ngModel)]="year" required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let y of allYears" value="{{+y}}">{{y}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="unLoadModel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

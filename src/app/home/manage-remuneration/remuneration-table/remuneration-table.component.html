@@ -1,0 +1,26 @@
+<div class="panel-body">
+  <div class="table-responsive table-bordered">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Type Name</th>
+          <th>Amount</th>
+          <th>Year</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reum of remunerations;let i=index" (click)="editReum(i)">
+          <td>{{i+1}}</td>
+          <td>{{reum.Type}}</td>
+          <td>{{reum.Amount}}</td>
+          <td>{{reum.Year.getFullYear()}}</td>
+          <td><a>Edit</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.table-responsive -->
+</div>

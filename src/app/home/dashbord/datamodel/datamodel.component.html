@@ -1,0 +1,61 @@
+<div id="createRole" class="modal fade in display" role="dialog" (click)="onUnLoade()">
+  <div class="modal-dialog" appPrevent>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="onUnLoade()">&times;</button>
+          <h4 class="modal-title">Add Reum</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Faculty Name</label>
+                <select class="form-control" name="Faculty" ngModel required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let faculty of faculties; let i=index" value="{{i}}">{{faculty.FacName}}</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Remunation type</label>
+                <select class="form-control" name="Remuneration" ngModel required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let reum of remunerations; let i=index" value="{{i}}">{{reum.Type}}</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="role">No Of Students</label>
+                <input type="number" class="form-control" name="noofs" ngModel required>
+
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label for="role">year</label>
+                <select class="form-control" name="year" ngModel required>
+                  <option value="">--Select--</option>
+                  <option *ngFor="let y of allYears" value="{{+y}}">{{y}}</option>
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onUnLoade()">Cancel</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

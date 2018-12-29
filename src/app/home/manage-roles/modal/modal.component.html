@@ -1,0 +1,31 @@
+<div id="createRole" class="modal fade in display" role="dialog" (click)="unLoadModel()">
+  <div class="modal-dialog" appPrevent>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="unLoadModel()">&times;</button>
+          <h4 class="modal-title">Create Role</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label for="role">Role Name</label>
+                <input id="role" class="form-control" name="role" ngModel required>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="unLoadModel()">Cancel</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

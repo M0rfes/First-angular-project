@@ -1,0 +1,21 @@
+<div class="panel-body">
+  <div class="table-responsive table-bordered">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Role Name</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let role of roles; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{role.RoleName}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.table-responsive -->
+</div>
