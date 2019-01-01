@@ -16,4 +16,7 @@ export class TableComponent implements OnInit {
       this.reumCalc = newReum;
     });
   }
+  onEdit(id:number) {
+    
+  }
 }

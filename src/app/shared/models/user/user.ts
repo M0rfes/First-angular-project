@@ -2,7 +2,6 @@ import { Role } from "../role/role";
 import { Department } from "../department/department";
 
 export class User {
-  public usserId: number;
   constructor(
     public Fname: string,
     public Lname: String,

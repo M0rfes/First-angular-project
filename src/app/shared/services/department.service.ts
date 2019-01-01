@@ -6,14 +6,7 @@ import { Department } from "../models/department/department";
   providedIn: "root"
 })
 export class DepartmentService {
-  private departments: Department[] = [
-    new Department("Computers"),
-    new Department("Mechanical"),
-    new Department("Electronics"),
-    new Department("Civil"),
-    new Department("Electronic & Telecommunication"),
-    new Department("Biotechnology")
-  ];
+  private departments: Department[] = [new Department("Computers")];
   updateDepartment: Subject<Department[]> = new Subject<Department[]>();
 
   constructor() {}
@@ -23,7 +16,6 @@ export class DepartmentService {
   }
 
   getDepartment(id: number): Department {
-    console.log(id);
     return this.departments[id];
   }
 
