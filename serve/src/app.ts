@@ -5,6 +5,10 @@ import IndexRoutes from "./routes/indexRoute";
 import TestRoutes from "./routes/testRoute";
 import UsersRoutes from "./routes/userRoute";
 import RoleRoutes from "./routes/roleRoute";
+import DepartmentRoutes from "./routes/department";
+import RemunerationRoutes from "./routes/remunerationRouter";
+import PayRoutes from "./routes/payRoute";
+import FacultyRoutes from "./routes/FacultyRoute";
 class App {
   public app: express.Application;
   constructor() {
@@ -14,6 +18,10 @@ class App {
     TestRoutes.routes(this.app);
     UsersRoutes.routes(this.app);
     RoleRoutes.routes(this.app);
+    DepartmentRoutes.routes(this.app);
+    FacultyRoutes.routes(this.app);
+    RemunerationRoutes.routes(this.app);
+    PayRoutes.routes(this.app);
     this.error();
   }
 

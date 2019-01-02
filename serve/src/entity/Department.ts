@@ -1,3 +1,4 @@
+import { isActive } from "./../util/isActive";
 import { User } from "./User";
 import { Faculty } from "./Faculty";
 import {
@@ -13,10 +14,6 @@ import * as uuidv4 from "uuid/v4";
 
 @Entity()
 export class Department extends BaseEntity {
-  @BeforeInsert()
-  addId(): void {
-    this.id = uuidv4();
-  }
   @PrimaryColumn("uuid")
   id: string;
   @Column("varchar", { length: 255 })
@@ -25,4 +22,10 @@ export class Department extends BaseEntity {
   faculties: Faculty[];
   @OneToMany(type => User, users => users.department)
   users: User[];
+  @Column("varchar", { default: "true" })
+  isActive: isActive;
+  @BeforeInsert()
+  addId(): void {
+    this.id = uuidv4();
+  }
 }

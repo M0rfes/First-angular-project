@@ -1,3 +1,4 @@
+import { isActive } from "./../util/isActive";
 import { User } from "./User";
 import {
   Entity,
@@ -18,6 +19,8 @@ export class Role extends BaseEntity {
   roleName: string;
   @OneToMany(tyep => User, users => users.role)
   users: User[];
+  @Column("varchar", { default: "true" })
+  isActive: isActive;
   @BeforeInsert()
   addId(): void {
     this.id = uuidv4();

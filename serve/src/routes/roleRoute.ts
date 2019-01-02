@@ -9,7 +9,7 @@ export default class RoleRoutes {
         RoleC.allRoles().then(roles => res.status(200).send(roles));
       })
       .post((req: Request, res: Response) => {
-        RoleC.addRole(req.body.role).then(r => res.status(200).send(r));
+        RoleC.addRole(req.body.roleName).then(r => res.status(200).send(r));
       });
     app
       .route("/role/:id")
@@ -21,12 +21,19 @@ export default class RoleRoutes {
           res.status(200).send(r)
         );
       })
-      .delete((req: Request, res: Response) => {});
+      .delete((req: Request, res: Response) => {
+        RoleC.deleteRole(req.params.id).then(roles =>
+          res.status(200).send(roles)
+        );
+      });
   }
 }
 class RoleC {
   static async allRoles() {
-    const allRoles = await Role.find({ relations: ["users"] });
+    const allRoles = await Role.find({
+      relations: ["users"],
+      where: { isActive: "true" }
+    });
     return allRoles;
   }
   static async addRole(roleName: string) {
@@ -34,21 +41,34 @@ class RoleC {
       roleName
     });
     await newRole.save();
-    return newRole;
+    return this.allRoles();
   }
   static async oneRole(id: string) {
-    const role = await Role.findOne({ relations: ["users"], where: { id } });
+    const role = await Role.findOne({
+      relations: ["users"],
+      where: { id, isActive: "true" }
+    });
     return role;
   }
-  static async updateRole(id: string, newRole: string) {
+  static async updateRole(id: string, roleName: string) {
     await getConnection()
       .createQueryBuilder()
       .update(Role)
-      .set({ roleName: newRole })
+      .set({ roleName })
       .where("id =:id", { id })
       .execute()
       .then(e => console.log(e))
       .catch(e => console.log(e));
-    return this.oneRole(id);
+    return this.allRoles();
+  }
+  static async deleteRole(id: string) {
+    await getConnection()
+      .createQueryBuilder()
+      .update(Role)
+      .set({ isActive: "false" })
+      .where("id=:id", { id })
+      .execute()
+      .catch(e => console.log(e));
+    return this.allRoles();
   }
 }

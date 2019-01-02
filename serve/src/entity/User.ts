@@ -1,3 +1,4 @@
+import { isActive } from "./../util/isActive";
 import { Department } from "./Department";
 import { Role } from "./Role";
 import {
@@ -24,14 +25,16 @@ export class User extends BaseEntity {
   email: string;
   @Column("varchar", { length: 255 })
   password: string;
-  @Column("int")
-  phone: number;
+  @Column("varchar", { length: 10 })
+  phone: string;
   @Column("date")
   dob: Date;
   @ManyToOne(type => Role, role => role.users)
   role: Role;
   @ManyToOne(type => Department, department => department.users)
   department: Department;
+  @Column("varchar", { default: "true" })
+  isActive: isActive;
   @BeforeInsert()
   addId(): void {
     this.id = uuidv4();
