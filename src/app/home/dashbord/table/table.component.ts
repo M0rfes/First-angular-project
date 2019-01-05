@@ -1,5 +1,7 @@
+import { ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
+import { FacultyRemunerationMap } from "serve/src/entity/FacultyRemunerationMap";
 import { Component, OnInit } from "@angular/core";
-import { ReumMap } from "src/app/shared/models/reumMap/reumMap";
 import { ReumMapService } from "src/app/shared/services/reum-map.service";
 
 @Component({
@@ -8,15 +10,23 @@ import { ReumMapService } from "src/app/shared/services/reum-map.service";
   styleUrls: ["./table.component.less"]
 })
 export class TableComponent implements OnInit {
-  reumCalc: ReumMap[];
-  constructor(private reumMapS: ReumMapService) {}
+  reumCalc: FacultyRemunerationMap[];
+  constructor(
+    private reumMapS: ReumMapService,
+    private router: Router,
+    private acRoute: ActivatedRoute
+  ) {}
   ngOnInit() {
-    this.reumCalc = this.reumMapS.ReumMap;
-    this.reumMapS.Update.subscribe((newReum: ReumMap[]) => {
+    this.reumMapS.ReumMap.subscribe(newReum => {
+      newReum.map(data => (data.year = new Date(data.year)));
+      this.reumCalc = newReum;
+    });
+    this.reumMapS.Update.subscribe((newReum: FacultyRemunerationMap[]) => {
+      newReum.map(data => (data.year = new Date(data.year)));
       this.reumCalc = newReum;
     });
   }
-  onEdit(id:number) {
-    
+  onEdit(id: string) {
+    this.router.navigate(["pay", id], { relativeTo: this.acRoute });
   }
 }

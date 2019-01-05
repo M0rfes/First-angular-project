@@ -9,23 +9,24 @@ export default class PayRoutes {
     app
       .route("/pays")
       .get((req: Request, res: Response) => {
-        PayC.allPay().then(pay => res.status(200).send(pay));
+        PayC.allPay().then(pay => res.status(200).json(pay));
       })
       .post((req: Request, res: Response) => {
-        PayC.addPay(req.body).then(pay => res.status(200).send());
+        console.log(req.body);
+        PayC.addPay(req.body).then(pay => res.status(200).json(pay));
       });
     app
       .route("/pay/:id")
       .get((req: Request, res: Response) => {
-        PayC.onePay(req.params.id).then(pay => res.status(200).send(pay));
+        PayC.onePay(req.params.id).then(pay => res.status(200).json(pay));
       })
       .put((req: Request, res: Response) => {
         PayC.updatePay(req.params.id, req.body).then(pays =>
-          res.status(200).send(pays)
+          res.status(200).json(pays)
         );
       })
       .delete((req: Request, res: Response) => {
-        PayC.deletePay(req.params.id).then(pay => res.status(200).send(pay));
+        PayC.deletePay(req.params.id).then(pay => res.status(200).json(pay));
       });
   }
 }
@@ -38,14 +39,14 @@ class PayC {
     return allPay;
   }
   static async addPay(pay) {
-    const { noStudent, faculty, remuneration, year } = pay;
-    const nFaculty = await Faculty.findOne({ id: faculty });
-    const Reum = await Remuneration.findOne({ id: remuneration });
+    const { noStudents, facultyId, remunerationId, year } = pay;
+    const nFaculty = await Faculty.findOne({ id: facultyId });
+    const Reum = await Remuneration.findOne({ id: remunerationId });
     const newPay = await FacultyRemunerationMap.create({
-      noStudent,
+      noStudents,
       year: new Date(year),
-      nFaculty,
-      Reum
+      faculty: nFaculty,
+      remuneration: Reum
     });
     await newPay.save();
     return this.allPay();
@@ -58,15 +59,15 @@ class PayC {
     return onePay;
   }
   static async updatePay(id: string, pay) {
-    const { noStudent, year, faculty, remuneration } = pay;
-    const nFaculty = await Faculty.findOne({ id: faculty });
-    const Reum = await Remuneration.findOne({ id: remuneration });
+    const { noStudents, year, facultyId, remunerationId } = pay;
+    const nFaculty = await Faculty.findOne({ id: facultyId });
+    const Reum = await Remuneration.findOne({ id: remunerationId });
     const nYear = new Date(year);
     await getConnection()
       .createQueryBuilder()
       .update(FacultyRemunerationMap)
       .set({
-        noStudent,
+        noStudents,
         year: nYear,
         faculty: nFaculty,
         remuneration: Reum

@@ -12,7 +12,7 @@
             <div class="col-lg-12">
               <div class="form-group">
                 <label for="role">Role Name</label>
-                <input id="role" class="form-control" name="role" ngModel required>
+                <input id="role" class="form-control" name="role" [(ngModel)]="roleName" required>
 
               </div>
             </div>
@@ -23,6 +23,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="unLoadModel()">Cancel</button>
+          <button type="button" class="btn btn-danger" *ngIf="editMode" (click)="onDelete()">Delete</button>
         </div>
       </div>
 

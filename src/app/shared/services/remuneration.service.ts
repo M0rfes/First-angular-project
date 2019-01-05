@@ -1,4 +1,5 @@
-import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Subject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Remuneration } from "../models/remuneration/remuneration";
 
@@ -7,26 +8,31 @@ import { Remuneration } from "../models/remuneration/remuneration";
 })
 export class RemunerationService {
   updateReum: Subject<Remuneration[]> = new Subject<Remuneration[]>();
-  private remunerations: Remuneration[] = [
-    new Remuneration("type", 3, new Date("2018"))
-  ];
+
   private AllYear: number[] = [];
-  constructor() {}
-  get Remunerations(): Remuneration[] {
-    return this.remunerations.slice();
+  private readonly baseUrls = "http://localhost:3000/remunerations";
+  private readonly baseUrl = "http://localhost:3000/remuneration";
+  constructor(private http: HttpClient) {}
+  get Remunerations(): Observable<Remuneration[]> {
+    return <Observable<Remuneration[]>>this.http.get(this.baseUrls);
   }
-  set addRemuneration(reum: Remuneration) {
-    this.remunerations.push(reum);
-    this.updateReum.next(this.Remunerations);
-  }
-
-  getReum(id: number): Remuneration {
-    return this.remunerations[id];
+  addRemuneration(reum: Remuneration): Observable<Remuneration[]> {
+    return <Observable<Remuneration[]>>this.http.post(this.baseUrls, reum);
   }
 
-  editReum(id: number, reum: Remuneration) {
-    this.remunerations[id] = reum;
-    this.updateReum.next(this.Remunerations);
+  getReum(id: string): Observable<Remuneration[]> {
+    return <Observable<Remuneration[]>>this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  editReum(id: string, reum: Remuneration): Observable<Remuneration[]> {
+    return <Observable<Remuneration[]>>(
+      this.http.put(`${this.baseUrl}/${id}`, reum)
+    );
+  }
+  deleteRemuneration(id: string): Observable<Remuneration[]> {
+    return <Observable<Remuneration[]>>(
+      this.http.delete(`${this.baseUrl}/${id}`)
+    );
   }
 
   years(): number[] {

@@ -1,38 +1,34 @@
-import { Subject } from "rxjs";
-import { Faculty } from "./../models/faculty/faculty";
+import { HttpClient } from "@angular/common/http";
+import { FacultyData } from "./../models/faculty/faculty";
+import { Subject, Observable } from "rxjs";
+import { Faculty } from "serve/src/entity/Faculty";
 import { Injectable } from "@angular/core";
-import { DepartmentService } from "./department.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class FacultyService {
-  private faculties: Faculty[] = [
-    new Faculty("name1", this.depService.getDepartment(0)),
-    new Faculty("name2", this.depService.getDepartment(1)),
-    new Faculty("name3", this.depService.getDepartment(2)),
-    new Faculty("name4", this.depService.getDepartment(3))
-  ];
   updateFaculties: Subject<Faculty[]> = new Subject<Faculty[]>();
-  constructor(private depService: DepartmentService) {}
-  get Faculties(): Faculty[] {
-    return this.faculties.slice();
-  }
-  createFaculty(name: string, depID: number): Faculty {
-    return new Faculty(name, this.depService.getDepartment(depID));
-  }
-
-  set addFaculty(faculty: Faculty) {
-    this.faculties.push(faculty);
-    this.updateFaculties.next(this.Faculties);
+  private readonly baseURls = "http://localhost:3000/faculties";
+  private readonly baseURl = "http://localhost:3000/faculty";
+  constructor(private http: HttpClient) {}
+  get Faculties(): Observable<Faculty[]> {
+    return <Observable<Faculty[]>>this.http.get(this.baseURls);
   }
 
-  getFaculty(id: number): Faculty {
-    return this.faculties[id];
+  addFaculty(faculty: FacultyData): Observable<Faculty[]> {
+    console.log(faculty);
+    return <Observable<Faculty[]>>this.http.post(this.baseURls, faculty);
   }
 
-  editFaculty(id: number, faculty: Faculty) {
-    this.faculties[id] = faculty;
-    this.updateFaculties.next(this.Faculties);
+  getFaculty(id: string): Observable<Faculty[]> {
+    return <Observable<Faculty[]>>this.http.get(`${this.baseURl}/${id}`);
+  }
+
+  editFaculty(id: string, faculty: FacultyData): Observable<Faculty[]> {
+    console.log(faculty);
+    return <Observable<Faculty[]>>(
+      this.http.put(`${this.baseURl}/${id}`, faculty)
+    );
   }
 }

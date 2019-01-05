@@ -7,26 +7,26 @@ export default class FacultyRoutes {
     app
       .route("/faculties")
       .get((req: Request, res: Response) => {
-        FacultyC.allFaculties().then(fac => res.status(200).send(fac));
+        FacultyC.allFaculties().then(fac => res.status(200).json(fac));
       })
       .post((req: Request, res: Response) => {
-        FacultyC.addFaculty(req.body).then(fac => res.status(200).send(fac));
+        FacultyC.addFaculty(req.body).then(fac => res.status(200).json(fac));
       });
     app
       .route("/faculty/:id")
       .get((req: Request, res: Response) => {
         FacultyC.onefaculty(req.params.id).then(fac =>
-          res.status(200).send(fac)
+          res.status(200).json(fac)
         );
       })
       .put((req: Request, res: Response) => {
         FacultyC.updateFaculty(req.params.id, req.body).then(fac =>
-          res.status(200).send(fac)
+          res.status(200).json(fac)
         );
       })
       .delete((req: Request, res: Response) => {
         FacultyC.deleteFaculty(req.params.id).then(fac =>
-          res.status(200).send(fac)
+          res.status(200).json(fac)
         );
       });
   }
@@ -40,25 +40,27 @@ class FacultyC {
     return allFaculties;
   }
   static async addFaculty(faculty) {
-    const { name, department } = faculty;
-    const newDep = await Department.findOne({ id: department });
+    const { name, departmentId } = faculty;
+    const newDep = await Department.findOne({ id: departmentId });
     const newfac = await Faculty.create({
       name,
       department: newDep
     });
     await newfac.save();
-    return this.allFaculties();
+    return await this.allFaculties();
   }
   static async onefaculty(id: string) {
     const faculty = await Faculty.find({
-      relations: ["depatment", "remunerationpay"],
+      relations: ["department", "remunerationpay"],
       where: { id, isActive: "true" }
     });
     return faculty;
   }
   static async updateFaculty(id: string, fac) {
-    const { name, department } = fac;
-    const newdepartment = Department.findOne({ id: department });
+    console.log(fac);
+    const { name, departmentId } = fac;
+    const newdepartment = await Department.findOne({ id: departmentId });
+    console.log(newdepartment);
     await getConnection()
       .createQueryBuilder()
       .update(Faculty)
@@ -68,7 +70,7 @@ class FacultyC {
       })
       .execute()
       .catch(e => console.log(e));
-    return this.allFaculties();
+    return await this.allFaculties();
   }
   static async deleteFaculty(id: string) {
     await getConnection()
@@ -78,6 +80,6 @@ class FacultyC {
       .where("id=:id", { id })
       .execute()
       .catch(e => console.log(e));
-    return this.allFaculties();
+    return await this.allFaculties();
   }
 }

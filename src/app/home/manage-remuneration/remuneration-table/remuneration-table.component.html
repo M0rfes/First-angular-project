@@ -11,11 +11,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let reum of remunerations;let i=index" (click)="editReum(i)">
+        <tr *ngFor="let reum of remunerations;let i=index" (click)="editReum(reum.id)">
           <td>{{i+1}}</td>
-          <td>{{reum.Type}}</td>
-          <td>{{reum.Amount}}</td>
-          <td>{{reum.Year.getFullYear()}}</td>
+          <td>{{reum.type}}</td>
+          <td>{{reum.amount}}</td>
+          <td>{{reum.date.getFullYear()}}</td>
           <td><a>Edit</a></td>
         </tr>
 

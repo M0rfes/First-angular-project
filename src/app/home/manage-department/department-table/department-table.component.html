@@ -9,9 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let department of departments; let i = index" (click)="onEdit(i)">
+        <tr *ngFor="let department of departments; let i = index" (click)="onEdit(department.id)">
           <td>{{i+1}}</td>
-          <td>{{department.DeptName}}</td>
+          <td>{{department.department}}</td>
           <td><a>Edit</a></td>
         </tr>
 

@@ -1,3 +1,6 @@
+import { User } from "serve/src/entity/User";
 export class Role {
-  constructor(public RoleName: string) {}
+  public id: string;
+  public users: User[];
+  constructor(public roleName: string) {}
 }

@@ -1,4 +1,3 @@
-import { UserService } from "./../../shared/services/user.service";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ModelService } from "src/app/shared/services/model.service";
@@ -9,11 +8,7 @@ import { ModelService } from "src/app/shared/services/model.service";
   styleUrls: ["./manage-users.component.less"]
 })
 export class ManageUsersComponent implements OnInit {
-  constructor(
-    private aRoute: ActivatedRoute,
-    private mService: ModelService,
-    private userService: UserService
-  ) {}
+  constructor(private aRoute: ActivatedRoute, private mService: ModelService) {}
 
   ngOnInit() {}
 

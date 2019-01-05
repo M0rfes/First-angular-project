@@ -11,13 +11,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let r of reumCalc; let i=index">
+      <tr *ngFor="let r of reumCalc; let i=index" (click)="onEdit(r.id)">
         <td>{{i+1}}</td>
         <td>{{r.year.getFullYear()}}</td>
-        <td>{{r.faculty.FacName}}</td>
-        <td>{{r.Students}}</td>
-        <td>{{r.remuneration.Amount}}</td>
-        <td>{{r.Students * r.remuneration.Amount}}</td>
+        <td>{{r.faculty.name}}</td>
+        <td>{{r.noStudents}}</td>
+        <td>{{r.remuneration.amount}}</td>
+        <td>{{r.noStudents * r.remuneration.amount}}</td>
       </tr>
 
     </tbody>

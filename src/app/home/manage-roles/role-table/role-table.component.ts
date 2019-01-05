@@ -1,7 +1,9 @@
+import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { Role } from "./../../../shared/models/role/role";
 import { RoleService } from "./../../../shared/services/role.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-role-table",
@@ -9,17 +11,26 @@ import { Subscription } from "rxjs";
   styleUrls: ["./role-table.component.less"]
 })
 export class RoleTableComponent implements OnInit, OnDestroy {
-  roles: Role[];
   sub: Subscription;
-  constructor(private roleService: RoleService) {}
+  roles: Role[];
+  constructor(
+    private roleService: RoleService,
+    private roter: Router,
+    private acroute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.roles = this.roleService.Roles;
     this.sub = this.roleService.updateRole.subscribe((roles: Role[]) => {
       this.roles = roles;
     });
+    this.roleService.Roles.subscribe((roles: Role[]) => {
+      this.roles = roles;
+    });
   }
-  ngOnDestroy() {
+  onEdit(id: string) {
+    this.roter.navigate([id], { relativeTo: this.acroute });
+  }
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 }

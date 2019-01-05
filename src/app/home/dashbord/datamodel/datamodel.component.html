@@ -14,7 +14,7 @@
                 <label>Faculty Name</label>
                 <select class="form-control" name="Faculty" ngModel required>
                   <option value="">--Select--</option>
-                  <option *ngFor="let faculty of faculties; let i=index" value="{{i}}">{{faculty.FacName}}</option>
+                  <option *ngFor="let faculty of faculties|async; let i=index" value="{{faculty.id}}">{{faculty.name}}</option>
                 </select>
 
               </div>
@@ -24,7 +24,7 @@
                 <label>Remunation type</label>
                 <select class="form-control" name="Remuneration" ngModel required>
                   <option value="">--Select--</option>
-                  <option *ngFor="let reum of remunerations; let i=index" value="{{i}}">{{reum.Type}}</option>
+                  <option *ngFor="let reum of remunerations|async; let i=index" value="{{reum.id}}">{{reum.type}}</option>
                 </select>
 
               </div>
@@ -32,7 +32,7 @@
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="role">No Of Students</label>
-                <input type="number" class="form-control" name="noofs" ngModel required>
+                <input type="number" class="form-control" name="noofs" [(ngModel)]="noStudents" required>
 
               </div>
             </div>
@@ -53,6 +53,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="onUnLoade()">Cancel</button>
+          <button type="button" class="btn btn-danger" *ngIf="editMode" (click)="onDelete()">Delete</button>
         </div>
       </div>
 

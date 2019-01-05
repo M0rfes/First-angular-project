@@ -1,31 +1,38 @@
-import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { Subject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { Department } from "../models/department/department";
+import { Department } from "./../models/department/department";
 
 @Injectable({
   providedIn: "root"
 })
 export class DepartmentService {
-  private departments: Department[] = [new Department("Computers")];
   updateDepartment: Subject<Department[]> = new Subject<Department[]>();
+  private readonly baseuRls = "http://localhost:3000/departments";
+  private readonly baseuRl = "http://localhost:3000/department";
+  constructor(private http: HttpClient) {}
 
-  constructor() {}
-
-  get Departments(): Department[] {
-    return this.departments.slice();
+  get Departments(): Observable<Department[]> {
+    return <Observable<Department[]>>this.http.get(this.baseuRls);
   }
 
-  getDepartment(id: number): Department {
-    return this.departments[id];
+  getDepartment(id: string): Observable<Department[]> {
+    console.log(id);
+    return <Observable<Department[]>>this.http.get(`${this.baseuRl}/${id}`);
   }
 
-  set addDepartment(newDepartment: Department) {
-    this.departments.push(newDepartment);
-    this.updateDepartment.next(this.Departments);
+  addDepartment(newDepartment: Department): Observable<Department[]> {
+    return <Observable<Department[]>>(
+      this.http.post(`${this.baseuRls}`, newDepartment)
+    );
   }
 
-  editDepartment(id: number, newDept: Department) {
-    this.departments[id] = newDept;
-    this.updateDepartment.next(this.Departments);
+  editDepartment(id: string, newDept: Department): Observable<Department[]> {
+    return <Observable<Department[]>>(
+      this.http.put(`${this.baseuRl}/${id}`, newDept)
+    );
+  }
+  deleteDepartment(id: string): Observable<Department[]> {
+    return <Observable<Department[]>>this.http.delete(`${this.baseuRl}/${id}`);
   }
 }

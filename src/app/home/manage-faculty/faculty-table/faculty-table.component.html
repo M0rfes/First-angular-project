@@ -11,11 +11,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let faculty of faculties; let i=index" (click)="onEdit(i)">
+        <tr *ngFor="let faculty of faculties; let i=index" (click)="onEdit(faculty.id)">
           <td>{{i+1}}</td>
 
-          <td>{{faculty.FacName}}</td>
-          <td>{{faculty.department.DeptName}}</td>
+          <td>{{faculty.name}}</td>
+          <td>{{faculty.department.department}}</td>
           <td><a>Edit</a></td>
 
         </tr>

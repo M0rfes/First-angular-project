@@ -6,25 +6,23 @@ export default class RoleRoutes {
     app
       .route("/roles")
       .get((req: Request, res: Response) => {
-        RoleC.allRoles().then(roles => res.status(200).send(roles));
+        RoleC.allRoles().then(roles => res.status(200).json(roles));
       })
       .post((req: Request, res: Response) => {
-        RoleC.addRole(req.body.roleName).then(r => res.status(200).send(r));
+        RoleC.addRole(req.body.roleName).then(r => res.status(201).json(r));
       });
     app
       .route("/role/:id")
       .get((req: Request, res: Response) => {
-        RoleC.oneRole(req.params.id).then(r => res.status(200).send(r));
+        RoleC.oneRole(req.params.id).then(r => res.json(r));
       })
       .put((req: Request, res: Response) => {
-        RoleC.updateRole(req.params.id, req.body.role).then(r =>
-          res.status(200).send(r)
-        );
+        RoleC.updateRole(req.params.id, req.body.roleName).then(r => {
+          res.status(202).json(r);
+        });
       })
       .delete((req: Request, res: Response) => {
-        RoleC.deleteRole(req.params.id).then(roles =>
-          res.status(200).send(roles)
-        );
+        RoleC.deleteRole(req.params.id).then(roles => res.json(roles));
       });
   }
 }
@@ -59,7 +57,7 @@ class RoleC {
       .execute()
       .then(e => console.log(e))
       .catch(e => console.log(e));
-    return this.allRoles();
+    return await this.allRoles();
   }
   static async deleteRole(id: string) {
     await getConnection()
@@ -68,7 +66,8 @@ class RoleC {
       .set({ isActive: "false" })
       .where("id=:id", { id })
       .execute()
+      .then(q => console.log(q))
       .catch(e => console.log(e));
-    return this.allRoles();
+    return await this.allRoles();
   }
 }

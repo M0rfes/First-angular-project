@@ -1,7 +1,7 @@
+import { Faculty } from "serve/src/entity/Faculty";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Faculty } from "./../../../shared/models/faculty/faculty";
 import { FacultyService } from "./../../../shared/services/faculty.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
@@ -20,7 +20,9 @@ export class FacultyTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.faculties = this.FacService.Faculties;
+    this.FacService.Faculties.subscribe(
+      (faculties: Faculty[]) => (this.faculties = faculties)
+    );
     this.sub = this.FacService.updateFaculties.subscribe(
       (faculties: Faculty[]) => {
         this.faculties = faculties;

@@ -11,7 +11,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
   styleUrls: ["./remunerationmodel.component.less"]
 })
 export class RemunerationmodelComponent implements OnInit, OnDestroy {
-  id: number;
+  id: string;
   editMode = false;
   editRum = "";
   editAmount: number = null;
@@ -28,11 +28,12 @@ export class RemunerationmodelComponent implements OnInit, OnDestroy {
     this.aRoute.params.subscribe((params: Params) => {
       if (params["id"]) {
         console.log(params["id"]);
-        this.id = +params["id"];
+        this.id = params["id"];
         this.editMode = true;
-        this.editRum = this.reumService.getReum(this.id).Type;
-        this.editAmount = this.reumService.getReum(this.id).Amount;
-        this.year = this.reumService.getReum(this.id).Year.getFullYear();
+        this.reumService.getReum(this.id).subscribe((reum: Remuneration[]) => {
+          this.editRum = reum[0].type;
+          this.editAmount = reum[0].amount;
+        });
       }
     });
   }
@@ -48,10 +49,24 @@ export class RemunerationmodelComponent implements OnInit, OnDestroy {
       new Date(value.Year)
     );
     if (!this.editMode) {
-      this.reumService.addRemuneration = newReum;
+      this.reumService.addRemuneration(newReum).subscribe(reum => {
+        this.reumService.updateReum.next(reum);
+      });
     } else {
-      this.reumService.editReum(this.id, newReum);
+      this.reumService
+        .editReum(this.id, newReum)
+        .subscribe((reum: Remuneration[]) =>
+          this.reumService.updateReum.next(reum)
+        );
     }
+    this.unLoadModel();
+  }
+  onDelete() {
+    this.reumService
+      .deleteRemuneration(this.id)
+      .subscribe((reum: Remuneration[]) =>
+        this.reumService.updateReum.next(reum)
+      );
     this.unLoadModel();
   }
 

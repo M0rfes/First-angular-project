@@ -1,44 +1,42 @@
-import { RemunerationService } from "./remuneration.service";
-import { FacultyService } from "./faculty.service";
+import { HttpClient } from "@angular/common/http";
+import { FacultyRemunerationMap } from "serve/src/entity/FacultyRemunerationMap";
 import { Injectable } from "@angular/core";
 import { ReumMap } from "../models/reumMap/reumMap";
-import { Subject } from "rxjs";
+import { Subject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class ReumMapService {
-  Update: Subject<ReumMap[]> = new Subject<ReumMap[]>();
-  private reumMaps: ReumMap[] = [
-    new ReumMap(
-      this.facService.getFaculty(0),
-      this.reuService.getReum(0),
-      22,
-      new Date("2002")
-    )
-  ];
-  constructor(
-    private facService: FacultyService,
-    private reuService: RemunerationService
-  ) {}
-  createRumMap(
-    reumID: number,
-    depID: number,
-    students: number,
-    date: string
-  ): ReumMap {
-    return new ReumMap(
-      this.facService.getFaculty(reumID),
-      this.reuService.getReum(depID),
-      students,
-      new Date(date)
+  Update: Subject<FacultyRemunerationMap[]> = new Subject<
+    FacultyRemunerationMap[]
+  >();
+  private reumMaps: ReumMap[] = [];
+  private readonly baseUrls = "http://localhost:3000/pays";
+  private readonly baseUrl = "http://localhost:3000/pay";
+  constructor(private http: HttpClient) {}
+  get ReumMap(): Observable<FacultyRemunerationMap[]> {
+    return <Observable<FacultyRemunerationMap[]>>this.http.get(this.baseUrls);
+  }
+  addMap(newMap: ReumMap): Observable<FacultyRemunerationMap[]> {
+    console.log(newMap);
+    return <Observable<FacultyRemunerationMap[]>>(
+      this.http.post(this.baseUrls, newMap)
     );
   }
-  get ReumMap(): ReumMap[] {
-    return this.reumMaps.slice();
+  getPay(id: string): Observable<FacultyRemunerationMap[]> {
+    return <Observable<FacultyRemunerationMap[]>>(
+      this.http.get(`${this.baseUrl}/${id}`)
+    );
   }
-  set addMap(newMap: ReumMap) {
-    this.reumMaps.push(newMap);
-    this.Update.next(this.ReumMap);
+  editPay(id: string, reumMap: ReumMap): Observable<FacultyRemunerationMap[]> {
+    return <Observable<FacultyRemunerationMap[]>>(
+      this.http.put(`${this.baseUrl}/${id}`, reumMap)
+    );
+  }
+  deletePay(id: string): Observable<FacultyRemunerationMap[]> {
+    return <Observable<FacultyRemunerationMap[]>>(
+      this.http.delete(`${this.baseUrl}/${id}`)
+    );
   }
 }

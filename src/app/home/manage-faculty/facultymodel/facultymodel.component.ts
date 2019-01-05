@@ -1,7 +1,8 @@
+import { Faculty } from "./../../../../../serve/src/entity/Faculty";
+import { Observable } from "rxjs";
 import { FacultyService } from "./../../../shared/services/faculty.service";
-import { Faculty } from "./../../../shared/models/faculty/faculty";
+import { FacultyData } from "./../../../shared/models/faculty/faculty";
 import { NgForm } from "@angular/forms";
-import { Department } from "./../../../shared/models/department/department";
 import { DepartmentService } from "src/app/shared/services/department.service";
 import { ModelService } from "src/app/shared/services/model.service";
 import { ActivatedRoute, Params } from "@angular/router";
@@ -13,11 +14,10 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./facultymodel.component.less"]
 })
 export class FacultymodelComponent implements OnInit {
-  departments: Department[];
-  id: number;
+  departments: Observable<object>;
+  id = "";
   editMode = false;
   eidtFacul = "";
-  editDepID: number = null;
   constructor(
     private aRoute: ActivatedRoute,
     private mService: ModelService,
@@ -30,26 +30,35 @@ export class FacultymodelComponent implements OnInit {
     this.departments = this.depService.Departments;
     this.acRoute.params.subscribe((params: Params) => {
       if (params["id"]) {
-        this.id = +params["id"];
+        this.id = params["id"];
         this.editMode = true;
-        this.eidtFacul = this.facService.getFaculty(this.id).FacName;
+        this.facService
+          .getFaculty(this.id)
+          .subscribe(
+            (faculties: Faculty[]) => (this.eidtFacul = faculties[0].name)
+          );
       }
     });
-    console.log(this.editMode, this.eidtFacul);
   }
   unLoadeModel() {
     this.mService.unLoadModel(this.aRoute);
   }
   onSubmit(f: NgForm) {
     const value = f.value;
-    const newFaculty = this.facService.createFaculty(
-      value.Name,
-      value.Department
-    );
+    const newFaculty = new FacultyData(value.Name, value.Department);
+    console.log(newFaculty);
     if (!this.editMode) {
-      this.facService.addFaculty = newFaculty;
+      this.facService
+        .addFaculty(newFaculty)
+        .subscribe((faculties: Faculty[]) =>
+          this.facService.updateFaculties.next(faculties)
+        );
     } else {
-      this.facService.editFaculty(this.id, newFaculty);
+      this.facService
+        .editFaculty(this.id, newFaculty)
+        .subscribe((faculties: Faculty[]) =>
+          this.facService.updateFaculties.next(faculties)
+        );
     }
     this.unLoadeModel();
   }

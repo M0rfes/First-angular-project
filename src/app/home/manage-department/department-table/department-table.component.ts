@@ -1,4 +1,3 @@
-import { ModelService } from "./../../../shared/services/model.service";
 import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DepartmentService } from "src/app/shared/services/department.service";
@@ -11,9 +10,8 @@ import { ActivatedRoute, Router } from "@angular/router";
   styleUrls: ["./department-table.component.less"]
 })
 export class DepartmentTableComponent implements OnInit, OnDestroy {
-  departments: Department[];
+  departments;
   sub: Subscription;
-  sub2: Subscription;
   constructor(
     private depService: DepartmentService,
     private acRoute: ActivatedRoute,
@@ -21,7 +19,9 @@ export class DepartmentTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.departments = this.depService.Departments;
+    this.depService.Departments.subscribe(
+      (departments: Department[]) => (this.departments = departments)
+    );
     this.sub = this.depService.updateDepartment.subscribe(
       (departments: Department[]) => {
         this.departments = departments;
@@ -31,7 +31,7 @@ export class DepartmentTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-  onEdit(id: number) {
+  onEdit(id: string) {
     this.router.navigate([id], { relativeTo: this.acRoute });
   }
 }

@@ -10,24 +10,25 @@ export default class UsersRoutes {
     app
       .route("/users")
       .get((req: Request, res: Response) => {
-        UserC.allUsers().then(users => res.status(200).send(users));
+        UserC.allUsers().then(users => res.status(200).json(users));
       })
       .post((req: Request, res: Response) => {
-        UserC.addUser(req.body).then(user => res.status(200).send(user));
+        console.log(req.body);
+        UserC.addUser(req.body).then(user => res.status(201).json(user));
       });
     app
       .route("/user/:id")
       .get((req: Request, res: Response) => {
-        UserC.oneUser(req.params.id).then(user => res.status(200).send(user));
+        UserC.oneUser(req.params.id).then(user => res.status(200).json(user));
       })
       .put((req: Request, res: Response) => {
         UserC.updateUser(req.params.id, req.body).then(user =>
-          res.status(200).send(user)
+          res.status(200).json(user)
         );
       })
       .delete((req: Request, res: Response) => {
         UserC.deleteUser(req.params.id).then(users =>
-          res.status(200).send(users)
+          res.status(200).json(users)
         );
       });
   }

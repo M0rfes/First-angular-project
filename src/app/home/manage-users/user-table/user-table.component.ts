@@ -1,5 +1,7 @@
+import { ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { User } from "src/app/shared/models/user/user";
+import { User } from "serve/src/entity/User";
 import { UserService } from "src/app/shared/services/user.service";
 import { Subscription } from "rxjs";
 
@@ -11,15 +13,27 @@ import { Subscription } from "rxjs";
 export class UserTableComponent implements OnInit, OnDestroy {
   users: User[];
   sub: Subscription;
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private acRouter: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.users = this.userService.Users;
+    this.userService.Users.subscribe((users: User[]) => {
+      console.log(users);
+      this.users = users;
+    });
     this.sub = this.userService.updateUser.subscribe((users: User[]) => {
+      console.log(users);
       this.users = users;
     });
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  onEdit(id: string) {
+    this.router.navigate([id], { relativeTo: this.acRouter });
   }
 }

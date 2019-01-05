@@ -1,16 +1,11 @@
-import { Role } from "../role/role";
-import { Department } from "../department/department";
-
-export class User {
-  constructor(
-    public Fname: string,
-    public Lname: String,
-    public Uname: String,
-    public Email: String,
-    public Phone: number,
-    public birth: Date,
-    public role: Role,
-    public department: Department,
-    public password: string
-  ) {}
+export class userData {
+  public fname: string;
+  public lname: String;
+  public uname: String;
+  public email: String;
+  public phone: number;
+  public dob: Date;
+  public role: string;
+  public department: string;
+  public password: string;
 }

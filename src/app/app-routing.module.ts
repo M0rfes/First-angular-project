@@ -29,7 +29,11 @@ const routes: Routes = [
         path: "",
         component: DashbordComponent,
         data: { fade: Math.random() },
-        children: [{ path: "model", component: DatamodelComponent }]
+        children: [
+          { path: "model", component: DatamodelComponent },
+          { path: "pay", redirectTo: "", pathMatch: "full" },
+          { path: "pay/:id", component: DatamodelComponent, pathMatch: "full" }
+        ]
       },
       {
         path: "dashbord",
@@ -40,14 +44,22 @@ const routes: Routes = [
         component: ManageUsersComponent,
         data: { fade: Math.random() },
         children: [
-          { path: "model", component: UsermodelComponent, data: { animate: 3 } }
+          {
+            path: "model",
+            component: UsermodelComponent,
+            data: { animate: 3 }
+          },
+          { path: ":id", component: UsermodelComponent }
         ]
       },
       {
         path: "ManageRoles",
         component: ManageRolesComponent,
         data: { fade: Math.random() },
-        children: [{ path: "model", component: ModalComponent }]
+        children: [
+          { path: "model", component: ModalComponent },
+          { path: ":id", component: ModalComponent }
+        ]
       },
       {
         path: "ManageFaculty",

@@ -15,16 +15,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users;let i=index">
+        <tr *ngFor="let user of users;let i=index" (click)="onEdit(user.id)">
           <td>{{i+1}}</td>
-          <td>{{user.Uname}}</td>
-          <td>{{user.Fname}}</td>
-          <td>{{user.Lname}}</td>
-          <td>{{user.Email}}</td>
-          <td>{{user.Phone}}</td>
-          <td>{{user.birth | date}}</td>
-          <td>{{user.role.RoleName}}</td>
-          <td>{{user.department.DeptName}}</td>
+          <td>{{user.uname}}</td>
+          <td>{{user.fname}}</td>
+          <td>{{user.lname}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.phone}}</td>
+          <td>{{user.dob | date}}</td>
+          <td>{{user.role.roleName}}</td>
+          <td>{{user.department.department}}</td>
         </tr>
 
       </tbody>

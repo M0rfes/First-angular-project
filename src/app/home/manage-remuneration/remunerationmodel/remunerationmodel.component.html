@@ -42,6 +42,7 @@
         <div class="modal-footer">
           <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal" (click)="unLoadModel()">Cancel</button>
+          <button type="button" class="btn btn-danger" *ngIf="editMode" (click)="onDelete()">Delete </button>
         </div>
       </div>
     </form>

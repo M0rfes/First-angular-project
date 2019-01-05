@@ -38,6 +38,7 @@ import { RemunerationmodelComponent } from "./home/manage-remuneration/remunerat
 import { PreventDirective } from "./shared/prevent.directive";
 import { DatamodelComponent } from "./home/dashbord/datamodel/datamodel.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -7,7 +7,7 @@
   "database": "development",
   "synchronize": true,
   "logging": false,
-  "dropSchema": false,
+  "dropSchema": true,
   "entities": [
     "src/entity/**/*.ts"
   ],

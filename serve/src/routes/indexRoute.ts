@@ -9,8 +9,9 @@ export default class IndexRoutes {
         });
       })
       .post((req: Request, res: Response) => {
-        res.status(200).send({
-          post: <string>"hell"
+        res.status(200).json({
+          post: <string>"hell",
+          body: req.body
         });
       });
   }

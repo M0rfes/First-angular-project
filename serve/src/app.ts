@@ -1,6 +1,8 @@
 import * as express from "express";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import * as bodyParser from "body-parser";
+import * as cors from "cors";
+
 import IndexRoutes from "./routes/indexRoute";
 import TestRoutes from "./routes/testRoute";
 import UsersRoutes from "./routes/userRoute";
@@ -26,8 +28,8 @@ class App {
   }
 
   private config(): void {
+    this.app.use(cors());
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
   }
   private error(): void {
     this.app.use((req: Request, res: Response) => {

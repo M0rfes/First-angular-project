@@ -19,15 +19,18 @@ export class RemunerationTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.remunerations = this.reService.Remunerations;
+    this.reService.Remunerations.subscribe((reum: Remuneration[]) => {
+      reum.map(data => (data.date = new Date(data.date)));
+      this.remunerations = reum;
+    });
     this.sub = this.reService.updateReum.subscribe(
       (remunerations: Remuneration[]) => {
+        remunerations.map(data => (data.date = new Date(data.date)));
         this.remunerations = remunerations;
       }
     );
   }
   ngOnDestroy() {
-    this.reService.updateReum.next(this.remunerations);
     this.sub.unsubscribe();
   }
 
